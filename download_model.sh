@@ -1,8 +1,8 @@
-#!/bin/bash\
+#!/bin/bash
 
-# Get files from Google Drive\
+# Get files from Google Drive
 
-id=1Egx0t5bWMLvcHpLYP5HqptRyCh1Mj_S- # change id\
+id=1Egx0t5bWMLvcHpLYP5HqptRyCh1Mj_S- # change id when new baseline is uploaded
 name=baseline
 
 URL="https://docs.google.com/uc?export=download&id=$id"
