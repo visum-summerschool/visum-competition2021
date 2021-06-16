@@ -1,0 +1,32 @@
+seed: 42
+
+DATA:
+  product_imgs_dir: /home/master/dataset/test/product_images
+  df_products_fn: /home/master/dataset/test/df_products.csv
+  df_outfits_fn: /home/master/dataset/test/df_outfits.csv
+  cache_dir: processed_data
+  imgs_ext: .jpg
+  batch_size: 128
+  num_workers: 4
+  max_prods_per_outfit: 14
+  val_split: 0.2
+  num_train_outfits: null # null: use whole training dataset; number greater than 0 to truncate the training dataset
+  num_valid_outfits:  null # null: use whole validation dataset; number greater than 0 to truncate the validation dataset
+
+TOKENIZER:
+  model: distilbert-base-uncased
+  max_length: 100
+
+TRANSFORMS:
+  crop: 224
+  scale:
+    - 0.8
+    - 1.0
+  mean:
+    - 0.485
+    - 0.456
+    - 0.406
+  std:
+    - 0.229
+    - 0.224
+    - 0.225
