@@ -52,7 +52,7 @@ TRAINER:
   log_interval: 50
   save_dir: results/
   resume_path: null  # null: start training from the beginning; str (model_checkpoint_path) for resume training
-  max_iter_per_epoch: 8 #00
+  max_iter_per_epoch: 800
 
 LOSS:
   margin: 1.0
