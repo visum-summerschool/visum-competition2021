@@ -26,7 +26,11 @@ if __name__ == "__main__":
     query_options = list()
     query_solutions = list()
 
-    numb_test_queries = cfg.DATA.num_valid_outfits
+    numb_test_queries = (
+        cfg.DATA.num_valid_outfits
+        if cfg.DATA.num_valid_outfits is not None
+        else len(df_outfits)
+    )
     for o_idx, outfit in enumerate(df_outfits.iterrows()):
         if len(outfit[1]["outfit_products"]) == 0:
             continue
