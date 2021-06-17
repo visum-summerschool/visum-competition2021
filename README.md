@@ -36,8 +36,10 @@ We wish you all good luck and much success in your work :)
 
 
 ### [Optional] How to test your model on the validation split
-The steps described in the previous section allow you to train your model and test it on some test queries (taken from the provided data) located in ```home/master/dataset/test```. However, you might want to test the model on the validation split created in step 2. To do so, consider the modified 6th and 7th steps:
-6. test your model with ```python3 test.py -t processed_data/valid```
-7. evaluate your model by running ```python3 evaluate.py preds.csv processed_data/valid/solutions.csv```
+The steps described in the previous section allow you to train your model and test it on some test queries (taken from the provided data) located in ```home/master/dataset/test```. However, you might want to test the model on the validation split created in step 2. To do so, consider the following steps:
+
+1. run ```python3 generate_test_queries.py```to generate queries from your validation split
+2. test your model with ```python3 test.py -t processed_data/valid```
+3. evaluate your model by running ```python3 evaluate.py preds.csv processed_data/valid/solutions.csv```
 
  
