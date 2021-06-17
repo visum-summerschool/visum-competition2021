@@ -25,27 +25,16 @@ def main(config):
     text_tokenizer = DistilBertTokenizer.from_pretrained(config.TOKENIZER.model)
 
     # build dataloaders
-    numb_train_outfits = (
-        config.DATA.num_train_outfits
-        if config.DATA.num_train_outfits is not None
-        else len(df_outfits_train)
-    )
-    numb_valid_outfits = (
-        config.DATA.num_valid_outfits
-        if config.DATA.num_valid_outfits is not None
-        else len(df_outfits_valid)
-    )
-
     train_loader = build_loaders(
         config,
-        df_outfits_train[:numb_train_outfits],
+        df_outfits_train,
         df_products_train,
         text_tokenizer,
         mode="train",
     )
     valid_loader = build_loaders(
         config,
-        df_outfits_valid[:numb_valid_outfits],
+        df_outfits_valid,
         df_products_valid,
         text_tokenizer,
         mode="valid",
