@@ -1,6 +1,6 @@
 import torch
-from baseline.metrics.metrics import MetricTracker
-from baseline.utils.utils import read_json, write_json
+from metrics.metrics import MetricTracker
+from utils.utils import read_json, write_json
 from tqdm import tqdm
 import os
 
@@ -123,14 +123,14 @@ class Trainer:
 
         return train_loss
 
-    def _valid_epoch(self, epoch):
+    def _valid_epoch(self):
         # initialize MetricTracker objects
         valid_loss = MetricTracker(name="Valid loss")
 
         self.model.eval()
         with torch.no_grad():
-            for batch_idx, batch in tqdm(
-                enumerate(self.val_loader),
+            for batch in tqdm(
+                self.val_loader,
                 desc="Validating",
                 total=len(self.val_loader),
             ):
@@ -183,8 +183,8 @@ class Trainer:
 
         # save current best model
         if is_best:
-            best_path = os.path.join(self.config.TRAINER.save_dir, "best_model.pth")
-            torch.save(state, best_path)
+            best_path = os.path.join(self.config.TRAINER.save_dir, "best_model_weights.pth")
+            torch.save(self.model.state_dict(), best_path)
             print("Saving current best model: best_model.pth")
 
     def _resume_checkpoint(self, resume_path):
