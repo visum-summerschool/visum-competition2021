@@ -7,20 +7,29 @@ import os
 import random
 import numpy as np
 from os.path import join
+import argparse
 
 from split_data_nondisjoint import from_np_array
-from utils.parsers import ConfigParser
 
 if __name__ == "__main__":
 
-    cfg = ConfigParser.from_yaml(config_fn="train_config.yaml")
-    dataDir = "processed_data/valid/"
+    parser = argparse.ArgumentParser(description="VISUM generate_test_queries script")
+    parser.add_argument(
+        "-d",
+        "--data_dir",
+        default="processed_data/valid/",
+        type=str,
+        help="data directory",
+    )
+    args = parser.parse_args()
 
-    df_outfits_fn = os.path.join(dataDir, "df_outfits.csv")
+    df_outfits_fn = os.path.join(args.data_dir, "df_outfits.csv")
     df_outfits = pandas.read_csv(
         df_outfits_fn, converters={"outfit_products": from_np_array}, index_col=0
     )
-    df_products = pandas.read_csv(os.path.join(dataDir, "df_products.csv"), index_col=0)
+    df_products = pandas.read_csv(
+        os.path.join(args.data_dir, "df_products.csv"), index_col=0
+    )
 
     query_outfits = list()
     query_options = list()
@@ -55,11 +64,11 @@ if __name__ == "__main__":
 
 
 pandas.DataFrame.from_dict({"outfit_products": query_outfits}).to_csv(
-    join(dataDir, "queries.csv")
+    join(args.data_dir, "queries.csv")
 )
 pandas.DataFrame.from_dict({"productid": query_solutions}).to_csv(
-    join(dataDir, "solutions.csv")
+    join(args.data_dir, "solutions.csv")
 )
 pandas.DataFrame.from_dict({"productids": query_options}).to_csv(
-    join(dataDir, "options.csv")
+    join(args.data_dir, "options.csv")
 )

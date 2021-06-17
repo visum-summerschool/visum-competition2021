@@ -4,6 +4,7 @@ import math
 import random
 import numpy as np
 import pandas
+import argparse
 
 from dataset import train_valid_split
 
@@ -63,30 +64,54 @@ def filter_outfits(df_outfits, products):
 
 # copy lines from the df_products
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="VISUM split_data_nondisjoint script")
+    parser.add_argument(
+        "-d",
+        "--data_dir",
+        default="/home/master/dataset/train",
+        type=str,
+        help="data directory",
+    )
+    parser.add_argument(
+        "-o",
+        "--out_dir",
+        default="processed_data",
+        type=str,
+        help="output directory",
+    )
+    parser.add_argument(
+        "-p",
+        "--proportion",
+        default=0.7,
+        type=float,
+        help="train split proportion",
+    )
+    parser.add_argument(
+        "-r",
+        "--dry_run",
+        default=False,
+        action="store_true",
+        help="perform a dry run without saving the resulting dataframes",
+    )
+    args = parser.parse_args()
 
     # to create the train-val split
-    dataDir = "/home/master/dataset/train"
-    finalDir = "processed_data"
     train_folder_name = "train"
     test_folder_name = "valid"
 
-    train_split_proportion = 0.7
-    random_seed_split = 42
-    dry_run = False
-
     # load raw df_outfits.csv
     df_outfits = pandas.read_csv(
-        os.path.join(dataDir, "df_outfits.csv"),
+        os.path.join(args.data_dir, "df_outfits.csv"),
         converters={"outfit_products": from_np_array},
         index_col=0,
     )
 
-    df_products_fn = os.path.join(dataDir, "df_products.csv")
+    df_products_fn = os.path.join(args.data_dir, "df_products.csv")
     df_products = pandas.read_csv(df_products_fn, index_col=0)
 
     # train and test split
     train_outfits, test_outfits = train_valid_split(
-        df_outfits, val_split=1 - train_split_proportion, shuffle=True
+        df_outfits, val_split=1 - args.proportion, shuffle=True
     )
     train_products = filter_products(
         df_products, list(np.concatenate(train_outfits["outfit_products"]))
@@ -111,11 +136,11 @@ if __name__ == "__main__":
     print("\tProducts", len(intersection_prods))
     print("\tOutfits", len(intersection_outfit))
 
-    if not dry_run:
+    if not args.dry_run:
         # save cleaned dataframe (df_products)
         print("Saving dataframes...")
-        if os.path.isdir(os.path.join(finalDir, test_folder_name)) or os.path.isdir(
-            os.path.join(finalDir, train_folder_name)
+        if os.path.isdir(os.path.join(args.out_dir, test_folder_name)) or os.path.isdir(
+            os.path.join(args.out_dir, train_folder_name)
         ):
             raise (
                 FileNotFoundError(
@@ -123,41 +148,45 @@ if __name__ == "__main__":
                 )
             )
 
-        os.makedirs(os.path.join(finalDir, train_folder_name), exist_ok=True)
-        os.makedirs(os.path.join(finalDir, test_folder_name), exist_ok=True)
+        os.makedirs(os.path.join(args.out_dir, train_folder_name), exist_ok=True)
+        os.makedirs(os.path.join(args.out_dir, test_folder_name), exist_ok=True)
         os.makedirs(
-            os.path.join(finalDir, train_folder_name, "product_images"), exist_ok=True
+            os.path.join(args.out_dir, train_folder_name, "product_images"),
+            exist_ok=True,
         )
         os.makedirs(
-            os.path.join(finalDir, test_folder_name, "product_images"), exist_ok=True
+            os.path.join(args.out_dir, test_folder_name, "product_images"),
+            exist_ok=True,
         )
 
         train_outfits = train_outfits.reset_index(drop=True)
         test_outfits = test_outfits.reset_index(drop=True)
 
         train_outfits.to_csv(
-            os.path.join(finalDir, train_folder_name, "df_outfits.csv")
+            os.path.join(args.out_dir, train_folder_name, "df_outfits.csv")
         )
-        test_outfits.to_csv(os.path.join(finalDir, test_folder_name, "df_outfits.csv"))
+        test_outfits.to_csv(
+            os.path.join(args.out_dir, test_folder_name, "df_outfits.csv")
+        )
         train_products.to_csv(
-            os.path.join(finalDir, train_folder_name, "df_products.csv")
+            os.path.join(args.out_dir, train_folder_name, "df_products.csv")
         )
         test_products.to_csv(
-            os.path.join(finalDir, test_folder_name, "df_products.csv")
+            os.path.join(args.out_dir, test_folder_name, "df_products.csv")
         )
 
         print("Saving train images...")
         for prod in train_products["productid"]:
-            src = os.path.join(dataDir, "product_images", f"{prod}.jpg")
+            src = os.path.join(args.data_dir, "product_images", f"{prod}.jpg")
             dst = os.path.join(
-                finalDir, train_folder_name, "product_images", f"{prod}.jpg"
+                args.out_dir, train_folder_name, "product_images", f"{prod}.jpg"
             )
             os.symlink(src, dst)
 
         print("Saving test images...")
         for prod in test_products["productid"]:
-            src = os.path.join(dataDir, "product_images", f"{prod}.jpg")
+            src = os.path.join(args.data_dir, "product_images", f"{prod}.jpg")
             dst = os.path.join(
-                finalDir, test_folder_name, "product_images", f"{prod}.jpg"
+                args.out_dir, test_folder_name, "product_images", f"{prod}.jpg"
             )
             os.symlink(src, dst)
