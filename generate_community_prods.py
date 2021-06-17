@@ -90,7 +90,7 @@ def color_graph(graph, productsInOutfit):
     display_graph(graph, color_map_)
 
 
-def generate_products_graph(config, df_outfits, display=False, numb_outfits=2000):
+def generate_products_graph(config, df_outfits, display=False):
     """
     Gemerate products graph to understand the relations of the products across outfits
 
@@ -102,7 +102,7 @@ def generate_products_graph(config, df_outfits, display=False, numb_outfits=2000
         graph (Graph): products graph
     """
 
-    productsInOutfit = df_outfits["outfit_products"][:numb_outfits].tolist()
+    productsInOutfit = df_outfits["outfit_products"].tolist()
 
     graph, partition = get_partition(productsInOutfit, config.seed)
 
@@ -136,13 +136,8 @@ if __name__ == "__main__":
     cfg = ConfigParser.from_yaml(config_fn="train_config.yaml")
 
     splits = ["train", "valid"]
-    numb_train_outfits = cfg.DATA.num_train_outfits
-    numb_valid_outfits = cfg.DATA.num_valid_outfits
-    numb_outfits = [
-        numb_train_outfits,
-        numb_valid_outfits,
-    ]  # number of outfits considered for each split
-    for s, n in zip(splits, numb_outfits):
+
+    for s in splits:
         print("Generating communities for {} split ...".format(s))
 
         # load dataframe
@@ -150,7 +145,7 @@ if __name__ == "__main__":
         print("dataset len: {};".format(len(df_outfits)))
 
         # generate graph
-        graph, partition = generate_products_graph(cfg, df_outfits, numb_outfits=n)
+        graph, partition = generate_products_graph(cfg, df_outfits)
 
         # get partition dataframe
         df_partitions = get_partition_dataframe(partition)
