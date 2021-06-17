@@ -16,12 +16,10 @@ INPUT_MODALITY: multimodal  # image or text or multimodal
 
 TOKENIZER:
   run: False
-  model: distilbert-base-uncased
   max_length: 100
+  save_path: results/{}/tokenizer
 
 TEXT_ENCODER:
-  model_name: distilbert-base-uncased
-  embedding_size: 768
   pretrained: True
   finetune: False
   finetune_start_block: 5  # there are 0-5 blocks
@@ -30,8 +28,6 @@ TEXT_ENCODER:
   dropout: 0.1
 
 IMAGE_ENCODER:
-  model_name: resnet50
-  embedding_size: 2048
   img_size: 224
   pretrained: True
   finetune: False
@@ -50,7 +46,7 @@ TRAINER:
   log_interval: 50
   save_dir: results/
   resume_path: null  # null: start training from the beginning; str (model_checkpoint_path) for resume training
-  max_iter_per_epoch: 800
+  max_iter_per_epoch: null # null: loop through whole dataloader in epoch; number greater than zero to limit the number of iterations per epoch
 
 LOSS:
   margin: 1.0
