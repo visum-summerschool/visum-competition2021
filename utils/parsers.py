@@ -22,7 +22,6 @@ class ConfigParser(object):
 
         # in train mode, create dedicated experiment dir (given by experiment_name) inside reports
         if mode == "train":
-            os.makedirs(config_dict["TRAINER"]["save_dir"], exist_ok=True)
             if config_dict["experiment_name"] is not None:
                 config_dict["TRAINER"]["save_dir"] = os.path.join(
                     config_dict["TRAINER"]["save_dir"], config_dict["experiment_name"]
@@ -32,6 +31,7 @@ class ConfigParser(object):
                 config_dict["TRAINER"]["save_dir"] = os.path.join(
                     config_dict["TRAINER"]["save_dir"], timestamp
                 )
+            os.makedirs(config_dict["TRAINER"]["save_dir"], exist_ok=True)
 
         return cls(config_dict)
 
