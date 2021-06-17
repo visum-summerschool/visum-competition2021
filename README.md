@@ -27,9 +27,11 @@ We wish you all good luck and much success in your work :)
 3. run ```python3 generate_community_prods.py``` to generate the louvain communities
 4. train the baseline using ```python3 train.py``` (model weights and checkpoints are saved in ```/home/visum/results/<timestamp>```
 5. copy your best model (and the tokenizer) into ```/home/visum``` by doing:
-    ```cp -r results/<timestamp>/tokenizer .
+    ```
+       cp -r results/<timestamp>/tokenizer .
        cp results/best_model_weights.pth .
     ```
+    where \<timestamp\> corresponds to the name of the folder where the trained model is located. Usually this will be a timestamp in the format YYYY-MM-DD_hh-mm-ss.
 6. test your model with ```python3 test.py```
 7. evaluate your model by running ```python3 evaluate.py preds.csv /home/master/dataset/test/solutions.csv```
 8. submit your results by accessing ***INSERT WEBSITE LINK HERE***
