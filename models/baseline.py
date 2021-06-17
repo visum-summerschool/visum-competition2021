@@ -1,8 +1,8 @@
 from torch import nn
 
-from baseline.models.modules.image_encoder import ImageEncoder
-from baseline.models.modules.multimodal_encoder import SimpleMultimodalEncoder
-from baseline.models.modules.text_encoder import TextEncoder
+from .modules.image_encoder import ImageEncoder
+from .modules.multimodal_encoder import SimpleMultimodalEncoder
+from .modules.text_encoder import TextEncoder
 
 
 class Model(nn.Module):
