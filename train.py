@@ -103,7 +103,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # parse config file
-    config = ConfigParser.from_yaml(config_fn=args.config)
+    config = ConfigParser.from_yaml(config_fn=args.config, mode="train")
 
     # fixing random seed for reproducibility
     fix_random_seeds(config.seed)

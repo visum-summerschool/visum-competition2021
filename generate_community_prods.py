@@ -133,7 +133,7 @@ def get_partition_dataframe(partition):
 
 if __name__ == "__main__":
     # parse config
-    cfg = ConfigParser.from_yaml(config_fn="train_config.yaml")
+    cfg = ConfigParser.from_yaml(config_fn="train_config.yaml", mode="None")
 
     splits = ["train", "valid"]
 
