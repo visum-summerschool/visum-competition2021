@@ -2,7 +2,7 @@ import torch.nn.functional as F
 from torch import nn
 from transformers import DistilBertModel, DistilBertConfig
 
-from baseline.models.modules.projection_block import ProjectionBlock
+from .projection_block import ProjectionBlock
 
 
 class TextEncoder(nn.Module):

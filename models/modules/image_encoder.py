@@ -3,7 +3,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 from torchvision import models
 
-from baseline.models.modules.projection_block import ProjectionBlock
+from .projection_block import ProjectionBlock
 
 
 class ImageEncoder(nn.Module):
