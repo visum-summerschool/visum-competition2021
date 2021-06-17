@@ -58,7 +58,7 @@ class Trainer:
             log += "\n>>>> {}: {:.6f} ".format(train_loss.name, train_loss.avg)
 
             # valid epoch
-            valid_loss = self._valid_epoch(epoch)
+            valid_loss = self._valid_epoch()
             log += "\n>>>> {}: {:.6f} ".format(valid_loss.name, valid_loss.avg)
             print(log)
 
@@ -80,10 +80,10 @@ class Trainer:
         train_loss = MetricTracker(name="Train loss")
 
         self.model.train()
-        for batch_idx, batch in tqdm(
-            enumerate(self.train_loader), total=len(self.train_loader), desc="Training"
-        ):
-            if batch_idx > self.config.TRAINER.max_iter_per_epoch:
+        for batch_idx, batch in enumerate(tqdm(self.train_loader, desc="Training")):
+            if (self.config.TRAINER.max_iter_per_epoch is not None) and (
+                batch_idx > self.config.TRAINER.max_iter_per_epoch
+            ):
                 break
             # unpack batch
             anchor = {k: v.to(self.device) for k, v in batch["anchor"].items()}
@@ -183,9 +183,11 @@ class Trainer:
 
         # save current best model
         if is_best:
-            best_path = os.path.join(self.config.TRAINER.save_dir, "best_model_weights.pth")
+            best_path = os.path.join(
+                self.config.TRAINER.save_dir, "best_model_weights.pth"
+            )
             torch.save(self.model.state_dict(), best_path)
-            print("Saving current best model: best_model.pth")
+            print("Saving current best model: best_model_weights.pth")
 
     def _resume_checkpoint(self, resume_path):
         """
