@@ -26,12 +26,7 @@ if __name__ == "__main__":
     query_options = list()
     query_solutions = list()
 
-    numb_test_queries = (
-        cfg.DATA.num_valid_outfits
-        if cfg.DATA.num_valid_outfits is not None
-        else len(df_outfits)
-    )
-    for o_idx, outfit in enumerate(df_outfits.iterrows()):
+    for outfit in df_outfits.iterrows():
         if len(outfit[1]["outfit_products"]) == 0:
             continue
 
@@ -58,8 +53,6 @@ if __name__ == "__main__":
         except ValueError:
             candidates = None
 
-        if o_idx > numb_test_queries:
-            break
 
 pandas.DataFrame.from_dict({"outfit_products": query_outfits}).to_csv(
     join(dataDir, "queries.csv")
