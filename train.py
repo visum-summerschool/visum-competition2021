@@ -22,7 +22,10 @@ def main(config):
     )
 
     # initialize text tokenizer
-    text_tokenizer = DistilBertTokenizer.from_pretrained(config.TOKENIZER.model)
+    text_tokenizer = DistilBertTokenizer.from_pretrained("distilbert-base-uncased")
+    text_tokenizer.save_pretrained(
+        config.TOKENIZER.save_path.format(config.TRAINER.time_stamp)
+    )
 
     # build dataloaders
     train_loader = build_loaders(
