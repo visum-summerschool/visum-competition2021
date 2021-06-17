@@ -31,6 +31,7 @@ class ConfigParser(object):
                 config_dict["TRAINER"]["save_dir"] = os.path.join(
                     config_dict["TRAINER"]["save_dir"], timestamp
                 )
+            config_dict["TRAINER"]["time_stamp"] = timestamp
             os.makedirs(config_dict["TRAINER"]["save_dir"], exist_ok=True)
 
         return cls(config_dict)
