@@ -13,11 +13,9 @@ class ImageEncoder(nn.Module):
 
     def __init__(
         self,
-        model_name="resnet50",
         pretrained=False,
         finetune=False,
         finetune_start_block=7,
-        embedding_size=2048,
         projection_size=256,
         dropout=0.1,
         l2_norm=True,
@@ -25,11 +23,9 @@ class ImageEncoder(nn.Module):
         """
         Encode text to a fixed size vector
 
-        :param model_name (str): Image model to be used
         :param pretrained (bool): Use pretrained image model (true or false)
         :param finetune (bool): finetune the basemodel layers? (true or false)
         :param finetune_start_block (int): the starting block for finetuning the basemodel
-        :param embedding_size (int): image embedding size (output of resnet50)
         :param projection_size (int): projection size (output of ProjectionBlock)
         :param dropout (float): dropout probability used on the ProjectionBlock
         :param l2_norm (bool): apply l2 normalization to the output image embeddings (true or false)
@@ -43,7 +39,7 @@ class ImageEncoder(nn.Module):
         self.base_model = nn.Sequential(*list(self.base_model.children())[:-1])
 
         # initialize a projection block (additional trainable layers)
-        self.projection = ProjectionBlock(embedding_size, projection_size, dropout)
+        self.projection = ProjectionBlock(2048, projection_size, dropout)
 
         # fine-tune the basemodel layers?
         self.finetuning(finetune, finetune_start_block)

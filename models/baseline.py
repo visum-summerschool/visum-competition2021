@@ -18,11 +18,9 @@ class Model(nn.Module):
 
         if self.input_modality == "image":
             self.image_encoder = ImageEncoder(
-                cfg_image.model_name,
                 cfg_image.pretrained,
                 cfg_image.finetune,
                 cfg_image.finetune_start_block,
-                cfg_image.embedding_size,
                 cfg_image.projection_size,
                 cfg_image.dropout,
                 cfg_image.l2_norm,
@@ -30,11 +28,9 @@ class Model(nn.Module):
 
         elif self.input_modality == "text":
             self.text_encoder = TextEncoder(
-                cfg_text.model_name,
                 cfg_text.pretrained,
                 cfg_text.finetune,
                 cfg_text.finetune_start_block,
-                cfg_text.embedding_size,
                 cfg_text.projection_size,
                 cfg_text.dropout,
                 cfg_text.l2_norm,
@@ -42,22 +38,18 @@ class Model(nn.Module):
 
         elif self.input_modality == "multimodal":
             self.image_encoder = ImageEncoder(
-                cfg_image.model_name,
                 cfg_image.pretrained,
                 cfg_image.finetune,
                 cfg_image.finetune_start_block,
-                cfg_image.embedding_size,
                 cfg_image.projection_size,
                 cfg_image.dropout,
                 cfg_image.l2_norm,
             )
 
             self.text_encoder = TextEncoder(
-                cfg_text.model_name,
                 cfg_text.pretrained,
                 cfg_text.finetune,
                 cfg_text.finetune_start_block,
-                cfg_text.embedding_size,
                 cfg_text.projection_size,
                 cfg_text.dropout,
                 cfg_text.l2_norm,

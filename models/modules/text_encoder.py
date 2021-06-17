@@ -8,11 +8,9 @@ from .projection_block import ProjectionBlock
 class TextEncoder(nn.Module):
     def __init__(
         self,
-        model_name="distilbert-base-uncased",
         pretrained=False,
         finetune=False,
         finetune_start_block=5,
-        embedding_size=768,
         projection_size=256,
         dropout=0.1,
         l2_norm=True,
@@ -35,12 +33,12 @@ class TextEncoder(nn.Module):
 
         # initialize base model, i.e. DistilBertModel
         if pretrained:
-            self.base_model = DistilBertModel.from_pretrained(model_name)
+            self.base_model = DistilBertModel.from_pretrained("distilbert-base-uncased")
         else:
             self.base_model = DistilBertModel(config=DistilBertConfig())
 
         # projection block (additional trainable layers)
-        self.projection = ProjectionBlock(embedding_size, projection_size, dropout)
+        self.projection = ProjectionBlock(768, projection_size, dropout)
 
         # we are using the CLS token hidden representation as the sentence's embedding
         self.target_token_idx = 0
