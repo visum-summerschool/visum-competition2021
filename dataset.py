@@ -213,7 +213,7 @@ class TripletOutfitDataset(BaseDataset):
         # gen anchor_pos_pairs dict
         anchor_pos_pairs = {}
         sample_index = 0
-        for index, row in tqdm(
+        for _, row in tqdm(
             self.df_outfits.iterrows(),
             desc="Generating anchor_pos_pairs ...",
             total=len(self.df_outfits),
@@ -251,7 +251,7 @@ class TripletOutfitDataset(BaseDataset):
 
         # gen category_2_prod dict
         category_2_prod = {}
-        for index, row in tqdm(
+        for _, row in tqdm(
             df_outfits.iterrows(),
             desc="Generating category_2_prod dict ...",
             total=len(df_outfits),
@@ -328,13 +328,16 @@ class FITBDataset(BaseDataset):
         return len(self.df_queries)
 
 
-def load_dataframes(cfg, mode="train"):
-    # load df_outfits dataframe
-    df_outfits = pd.read_csv(
-        cfg.df_outfits_fn.format(mode),
-        converters={"outfit_products": from_np_array},
-        index_col=0,
-    )
+def load_dataframes(cfg, mode="train", load_outfits=True):
+    if load_outfits:
+        # load df_outfits dataframe
+        df_outfits = pd.read_csv(
+            cfg.df_outfits_fn.format(mode),
+            converters={"outfit_products": from_np_array},
+            index_col=0,
+        )
+    else:
+        df_outfits = None
 
     # load df_products dataframe
     df_products = pd.read_csv(cfg.df_products_fn.format(mode), index_col=0)
