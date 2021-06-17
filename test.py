@@ -57,7 +57,7 @@ def get_scores(query_embeddings, candidates_embeddings, aggregation_foo="sum"):
 
 def main(config, model_fn, test_dir, out_dir, agg_foo="sum", mode="valid"):
     # load test split dataframes
-    _, df_products_test = load_dataframes(config.DATA, mode=mode)
+    _, df_products_test = load_dataframes(config.DATA, mode=mode, load_outfits=False)
 
     # load FITB test queries: queries.csv and options.csv dataframes
     df_candidates = pd.read_csv(
