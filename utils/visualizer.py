@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib import image as mpimg
 
-from baseline.utils.utils import tokens_str
+from utils import tokens_str
 
 
 def triplet_outfit_visualizer(
