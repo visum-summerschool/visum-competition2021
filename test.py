@@ -12,6 +12,7 @@ from dataset import load_dataframes, FITBDataset
 from utils.parsers import ConfigParser
 from utils.utils import from_np_array, fix_random_seeds
 from utils.visualizer import FITB_random_query_viz, FITB_query_viz
+from models.baseline import Model
 
 
 def get_scores(query_embeddings, candidates_embeddings, aggregation_foo="sum"):
@@ -55,7 +56,7 @@ def get_scores(query_embeddings, candidates_embeddings, aggregation_foo="sum"):
     return candidates_scores
 
 
-def main(config, model_fn, test_dir, out_dir, agg_foo="sum", mode="valid"):
+def main(config, test_dir, out_dir, agg_foo="sum", mode="valid"):
     # load test split dataframes
     _, df_products_test = load_dataframes(config.DATA, mode=mode, load_outfits=False)
 
@@ -73,7 +74,7 @@ def main(config, model_fn, test_dir, out_dir, agg_foo="sum", mode="valid"):
     )
 
     # initialize text tokenizer
-    text_tokenizer = DistilBertTokenizer.from_pretrained(config.TOKENIZER.model)
+    text_tokenizer = DistilBertTokenizer.from_pretrained(config.TOKENIZER.path)
 
     # FITB dataset
     fitb_dataset = FITBDataset(
@@ -81,8 +82,14 @@ def main(config, model_fn, test_dir, out_dir, agg_foo="sum", mode="valid"):
     )
 
     # load model checkpoint
-    checkpoint = torch.load(model_fn)
-    model = checkpoint["model"]
+    model = Model(
+        config.INPUT_MODALITY,
+        config.IMAGE_ENCODER,
+        config.TEXT_ENCODER,
+        config.MULTIMODAL_ENCODER,
+    )
+
+    model.load_state_dict(torch.load(config.MODEL_WEIGHTS_PATH))
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model = model.to(device)
     model.eval()
@@ -132,13 +139,6 @@ if __name__ == "__main__":
         help="config file name",
     )
     parser.add_argument(
-        "-m",
-        "--model_fn",
-        default="best_model.pth",
-        type=str,
-        help="model checkpoint filename for inference",
-    )
-    parser.add_argument(
         "-f",
         "--agg_foo",
         default="sum",
@@ -149,14 +149,15 @@ if __name__ == "__main__":
         "-d", "--display", help="display FITB results", action="store_true"
     )
     parser.add_argument(
+        "-t",
         "--test_dir",
         default="/home/master/dataset/test",
         type=str,
         help="location of test data",
     )
-    parser.add_argument("--out_dir", default="", type=str, help="output directory")
-
-    # add var to save csvs in home/visum
+    parser.add_argument(
+        "-o", "--out_dir", default="", type=str, help="output directory"
+    )
 
     args = parser.parse_args()
 
@@ -167,7 +168,7 @@ if __name__ == "__main__":
     fix_random_seeds(config.seed)
 
     # FITB queries inference
-    main(config, args.model_fn, args.test_dir, args.out_dir, args.agg_foo)
+    main(config, args.test_dir, args.out_dir, args.agg_foo)
 
     # Visualize FITB results
     if args.display:
