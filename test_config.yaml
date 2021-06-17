@@ -11,10 +11,38 @@ DATA:
   max_prods_per_outfit: 14
   val_split: 0.2
 
-TOKENIZER:
-  model: distilbert-base-uncased
-  max_length: 100
+INPUT_MODALITY: multimodal  # image or text or multimodal
 
+MODEL_WEIGHTS_PATH: results/best_model_weights.pth
+
+TOKENIZER:
+  max_length: 100
+  path: results/tokenizer
+
+TEXT_ENCODER:
+  pretrained: True
+  finetune: False
+  finetune_start_block: 5  # there are 0-5 blocks
+  l2_norm: True
+  projection_size: 1024
+  dropout: 0.1
+
+IMAGE_ENCODER:
+  img_size: 224
+  pretrained: True
+  finetune: False
+  finetune_start_block: 7  # there are 0-8 blocks
+  l2_norm: True
+  projection_size: 1024
+  dropout: 0.1
+
+MULTIMODAL_ENCODER:
+  embedding_size: 1024
+  l2_norm: True
+  dropout: 0.1
+
+
+        
 TRANSFORMS:
   crop: 224
   scale:
