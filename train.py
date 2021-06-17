@@ -6,7 +6,7 @@ from transformers import DistilBertTokenizer
 
 from dataset import load_dataframes, build_loaders
 from models.baseline import Model
-from trainers.trainer import Trainer
+from trainer import Trainer
 from utils.parsers import ConfigParser
 from utils.utils import fix_random_seeds
 
