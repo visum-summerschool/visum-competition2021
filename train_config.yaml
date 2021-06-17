@@ -9,8 +9,6 @@ DATA:
   imgs_ext: .jpg
   batch_size: 128
   num_workers: 4
-  max_prods_per_outfit: 14
-  val_split: 0.2
 
 INPUT_MODALITY: multimodal  # image or text or multimodal
 
@@ -28,7 +26,6 @@ TEXT_ENCODER:
   dropout: 0.1
 
 IMAGE_ENCODER:
-  img_size: 224
   pretrained: True
   finetune: False
   finetune_start_block: 7  # there are 0-8 blocks
