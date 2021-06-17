@@ -37,5 +37,5 @@ class ConfigParser(object):
 
 
 if __name__ == "__main__":
-    CFG = ConfigParser.from_yaml(config_fn="../../config/config.yaml")
+    CFG = ConfigParser.from_yaml(config_fn="../train_config.yaml")
     print(CFG)
