@@ -162,7 +162,7 @@ class Trainer:
 
         Args:
             epoch (int): current epoch number
-            is_best (bool): if True, rename the saved checkpoint to 'model_best.pth'
+            is_best (bool): if True, rename the saved checkpoint to 'best_model_weights.pth'
         """
 
         state = {

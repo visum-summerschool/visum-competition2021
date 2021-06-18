@@ -178,7 +178,7 @@ if __name__ == "__main__":
             index_col=0,
         )
         df_preds = pd.read_csv(
-            os.path.join(args.test_dir, "preds_ranked.csv"),
+            os.path.join(args.out_dir, "preds_ranked.csv"),
             converters={"productid": from_np_array},
             index_col=0,
         )
@@ -188,5 +188,7 @@ if __name__ == "__main__":
             index_col=0,
         )
 
-        FITB_random_query_viz(config, df_queries, df_preds, df_gt)
-        FITB_query_viz(config, df_queries, df_preds, df_gt)
+        FITB_random_query_viz(
+            config, df_queries, df_preds, df_gt, save_path=args.out_dir
+        )
+        # FITB_query_viz(config, df_queries, df_preds, df_gt, save_path=args.out_dir)
