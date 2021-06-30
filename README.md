@@ -34,7 +34,7 @@ We wish you all good luck and much success in your work :)
     where \<timestamp\> corresponds to the name of the folder where the trained model is located. Usually this will be a timestamp in the format YYYY-MM-DD_hh-mm-ss.
 6. test your model with ```python3 test.py```
 7. evaluate your model by running ```python3 evaluate.py preds.csv /home/master/dataset/test/solutions.csv```
-8. submit your results by accessing ***INSERT WEBSITE LINK HERE***
+8. submit your results by accessing [here](https://visum.inesctec.pt/submissions)
 
 
 ### [Optional] How to test your model on the validation split
