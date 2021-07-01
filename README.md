@@ -29,7 +29,7 @@ We wish you all good luck and much success in your work :)
 4. Either:
     - train the baseline using ```python3 train.py``` (model weights and checkpoints are saved in ```/home/visum/results/<timestamp>```) **OR**
     - use the baseline weights which are already in ```/home/visum/results/```.
-5. **If** you trained a new model you need to copy the weights (and the tokenizer) into ```/home/visum``` by doing:
+5. **IF** you trained a new model you need to copy the weights (and the tokenizer) into ```/home/visum``` by doing:
     ```
        cp -r results/<timestamp>/tokenizer results/.
        cp results/<timestamp>/best_model_weights.pth results/.
