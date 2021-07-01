@@ -47,4 +47,12 @@ The steps described in the previous section allow you to train your model and te
 2. test your model with ```python3 test.py -t processed_data/valid```
 3. evaluate your model by running ```python3 evaluate.py preds.csv processed_data/valid/solutions.csv```
 
+### Check for erros in your submission:
+```
+cd /home/visum/
+rm preds.csv
+python3 test.py
+python3 evaluate.py preds.csv /home/master/dataset/test/solutions.csv```
+
+
  
