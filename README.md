@@ -15,8 +15,6 @@ We wish you all good luck and much success in your work :)
 
 **Submission Platform** - [here](https://visum.inesctec.pt/submissions)
 
-**Team Registration** - [here](https://forms.gle/XXMhSXwW7RSzURU99)
-
 ## How to run the baseline code (from the /home/visum folder)
 1. Access the baseline source code by either:
    - Accessing the files already present in your machine
