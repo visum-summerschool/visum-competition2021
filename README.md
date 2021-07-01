@@ -13,6 +13,8 @@ We wish you all good luck and much success in your work :)
 
 **FAQs** - [here](INSERT_LINK)
 
+**Submission Platform** - [here](https://visum.inesctec.pt/submissions)
+
 
 ## How to run the baseline code (from the /home/visum folder)
 1. Access the baseline source code by either:
