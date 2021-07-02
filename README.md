@@ -9,7 +9,7 @@ Here you will find all information regarding the competition, including:
 
 We wish you all good luck and much success in your work :)
 
-**Presentation** - [here](INSERT_LINK)
+**Presentation** - [here](https://github.com/visum-summerschool/visum-competition2021/blob/main/Project%20Presentation.pdf)
 
 **FAQs** - [here](https://github.com/visum-summerschool/visum-competition2021/blob/main/VISUM2021_FAQs.pdf)
 
