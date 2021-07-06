@@ -20,19 +20,25 @@ class ConfigParser(object):
         with open(config_fn) as file:
             config_dict = yaml.full_load(file)
 
-        # in train mode, create dedicated experiment dir (given by experiment_name) inside reports
+        # in train mode, create dedicated experiment dir (given by experiment_name) inside reports or use the one provided in resume_path
         if mode == "train":
-            if config_dict["experiment_name"] is not None:
+            if config_dict["TRAINER"]["resume_path"] is not None:
+                save_dir = os.path.dirname(config_dict["TRAINER"]["resume_path"])
+                config_dict["TRAINER"]["save_dir"] = save_dir
+                config_dict["TRAINER"]["time_stamp"] = save_dir.split("/")[-1]
+            elif config_dict["experiment_name"] is not None:
                 config_dict["TRAINER"]["save_dir"] = os.path.join(
                     config_dict["TRAINER"]["save_dir"], config_dict["experiment_name"]
                 )
+                config_dict["TRAINER"]["time_stamp"] = config_dict["experiment_name"]
+                os.makedirs(config_dict["TRAINER"]["save_dir"], exist_ok=False)
             else:
                 timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
                 config_dict["TRAINER"]["save_dir"] = os.path.join(
                     config_dict["TRAINER"]["save_dir"], timestamp
                 )
-            config_dict["TRAINER"]["time_stamp"] = timestamp
-            os.makedirs(config_dict["TRAINER"]["save_dir"], exist_ok=True)
+                config_dict["TRAINER"]["time_stamp"] = timestamp
+                os.makedirs(config_dict["TRAINER"]["save_dir"], exist_ok=False)
 
         return cls(config_dict)
 
