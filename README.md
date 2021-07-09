@@ -15,6 +15,8 @@ We wish you all good luck and much success in your work :)
 
 **Submission Platform** - [here](https://visum.inesctec.pt/submissions)
 
+**Final Leaderboard** - [here](https://github.com/visum-summerschool/visum-competition2021/blob/main/Final%20Leaderboard%20VISUM%202021.pdf)
+
 ## How to run the baseline code (from the /home/visum folder)
 1. Access the baseline source code by either:
    - Accessing the files already present in your machine **OR**
